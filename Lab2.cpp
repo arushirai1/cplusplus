@@ -39,16 +39,26 @@ public:
 		someFloat = 0;
 
 	}
-	void setID(int idNum1);
-	void setStringID(string id1);
-	void setName(string name1);
-	void setYear(int year1);
-	void setSomeFloat(float some);
-	int getID();
-	string getStringID();
-	string getName();
-	int getYear();
-	float getFloat();
+	void setID(int idNum1){
+		*idNum = idNum1;
+	}	
+	void setStringID(string id1) {
+		*id = id1;
+	}
+	void setName(string name1) {
+		*name = name1;
+	}
+	void setYear(int year1) {
+		*year = year1;
+	}
+	void setSomeFloat(float some) {
+		*someFloat = some;
+	}
+	int getID() {return *idNum;}
+	string getStringID() {return *id;}
+	string getName(){return *name;}
+	int getYear(){return *year;}
+	float getFloat(){return *someFloat;}
 };
 
 class Book : public Item {
