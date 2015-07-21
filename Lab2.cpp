@@ -67,16 +67,28 @@ protected:
 	char* letter;
 	int* someNumber;
 public:
-	Book();
-	Book(int idNum1, string id1, string name1, string author, char letter1, int year1, int someNumber1, float somefloat1);
-	~Book();
-	void setAuthor(string author1);
-	void setLetter(char letter);
-	void setSomeNumber(int someNum);
-	string getAuthor();
-	char getLetter();
-	int getSomeNumber();
-
+	Book() : Item(), author(" "), letter(' '), someNumber(0) { }
+	Book(int idNum1, string id1, string name1, string author1, char letter1, int year1, int someNumber1, float somefloat1) : Item(idNum1, id1, name1, year1, somefloat1), author(author1), letter(letter1) { }
+	~Book() {
+		delete author;
+		delete letter;
+		delete someNumber;
+		author = NULL;
+		letter = NULL;
+		someNumber = 0;
+	}
+	void setAuthor(string author1) {
+		*author = author1;
+	}
+	void setLetter(char letter1) {
+		*letter = letter1;
+	}
+	void setSomeNumber(int someNum){
+		*sumNum = sumNum1;
+	}
+	string getAuthor() {return *author;}
+	char getLetter() {return *letter; }
+	int getSomeNumber() {return *someNumber;} 
 };
 
 class DVD : public Item {
@@ -84,21 +96,31 @@ protected:
 	string* director1;
 	string* director2;
 public:
-	DVD();
-	DVD(int idNum1, string id1, string name1, int year1, string director01, string director02, float somefloat1);
-	~DVD();
-	void setDirector1(string d1);
-	void setDirector2(string d2);
-	string getDirector1();
-	string getDirector2();
-
+	DVD() : Item(), director1(" "), director2(" ") { };
+	DVD(int idNum1, string id1, string name1, int year1, string director01, string director02, float somefloat1) : Item(idNum1, id1, name1, year1, somefloat1), director1(director01), director2(director02) { }
+	~DVD() {
+		delete director1;
+		delete director2;
+		director1 = NULL;
+		director2 = NULL;
+	}
+	void setDirector1(string d1) {
+		*director1 = d1;
+	}
+	void setDirector2(string d2) {
+		*director2 = d2;
+	}
+	string getDirector1() {
+		return *director1;
+	}
+	string getDirector2() {
+		return *director2;
+	}
 };
 
 
 
 int main() {
-	int idNum1 = 1;
-	Item *it [13];
-	it[0] = new DVD();
+	
 	return 0;
 }
