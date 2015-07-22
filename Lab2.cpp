@@ -38,6 +38,10 @@ public:
 		someFloat = 0;
 
 	}
+
+	virtual void print() {
+		cout << *idNum <<'\t' << *id <<'\t' << *name << '\t' << *year <<'\t' << *someFloat << '\t';
+	}
 	void setID(int idNum1){
 		*idNum = idNum1;
 	}	
@@ -74,6 +78,11 @@ public:
 		delete someNumber;
 		someNumber = 0;
 	}
+
+	virtual void print() {
+		Item::print();
+		cout << author << 't' << letter << 't' <<someNumber << endl;
+	}
 	void setAuthor(string author1) {
 		*author = author1;
 	}
@@ -98,6 +107,11 @@ public:
 	~DVD() {
 		delete director1;
 		delete director2;
+	}
+
+	virtual void print() {
+		Item::print();
+		cout << director1 << '\t' << director2 <<endl;
 	}
 	void setDirector1(string d1) {
 		*director1 = d1;
@@ -124,18 +138,47 @@ int main() {
 	
 	Item *item[count];
 	
-	constant = 0;
+	count = 0;
+	char idNum [20];
+	char id [20]; 
+	char name [40]; 
+	char author [20]; 
+	char letter [20]; 
+	char year[20]; 
+	char someNumber[20]; 
+	char somefloat[20];
+	char director1[20];
+	char director2[20];
 	while (!file.eof()) {
-		if (file.getline() < 5000) {
+		//int idNum1, string id1, string name1, int year1, float somefloat1
+		getline(file, idNum, ',');
+		getline(file, id, ',');
+		getline(file, name, ',');
+		if ((int) idNum < 5000) {
 			//int idNum1, string id1, string name1, string author1, char letter1, int year1, int someNumber1, float somefloat1
-			char idNum [20];
-			char id [20]; char name [20]; char author [20]; char letter [20]; char year[20]; char someNumber[20]; char somefloat[20]
-			*item[count] = new Book();
+			//author(" "), letter(' '), someNumber(0)
+			getline(file, author, ',');
+			getline(file, letter, ',');
+			getline(file, year, ',');
+			getline(file, someNumber, ',');
+			getline(file, somefloat, ',');
+			*item[count] = new Book((int) idNum, (string) id, (string) name1, (string) author1, (char) letter1, (int) year1, (int) someNumber1, (float) somefloat1);
 
 		}
-		else
-			*item[count] = new DVD();		
-	}	
+		else {
+			getline(file, year, ',');
+			getline(file, director1, ',');
+			getline(file, director2, ',');
+			getline(file, somefloat, ',');
+			*item[count] = new DVD((int) idNum, (string) id, (string) name, (int) year, (string) director1, (string) director2, (float) somefloat1);		
+		}
+
+		count++;
+	}
+
+	for (Item p : item) {
+		p.print();
+	}
 	
 	return 0;
 }
