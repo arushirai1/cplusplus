@@ -81,7 +81,7 @@ public:
 
 	virtual void print() {
 		Item::print();
-		cout << author << 't' << letter << 't' <<someNumber << endl;
+		cout << *author << 't' << *letter << 't' <<*someNumber << endl;
 	}
 	void setAuthor(string author1) {
 		*author = author1;
@@ -110,8 +110,9 @@ public:
 	}
 
 	virtual void print() {
+		cout <<
 		Item::print();
-		cout << director1 << '\t' << director2 <<endl;
+		cout << *director1 << '\t' << *director2 <<endl;
 	}
 	void setDirector1(string d1) {
 		*director1 = d1;
