@@ -1,6 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <boost/lexical_cast.hpp>
 
 using namespace std;
 
@@ -97,6 +98,7 @@ public:
 
 
 	virtual void print() {
+	    cout <<"Book: ";
 		Item::print();
 		cout << *author << 't' << *letter << 't' <<*someNum << endl;
 	}
@@ -137,7 +139,7 @@ public:
 	}
 
 	virtual void print() {
-		cout <<"DVD";
+		cout <<"DVD: ";
 		Item::print();
 		cout << *director1 << '\t' << *director2 <<endl;
 	}
@@ -158,7 +160,7 @@ public:
 
 
 int main() {
-	istream file ("Inventory.csv");
+	ifstream file ("Inventory.csv");
 	int count;
 	while (!file.eof()) {
 		count ++;
@@ -167,16 +169,16 @@ int main() {
 	Item *item[count];
 
 	count = 0;
-	char idNum [20];
-	char id [20];
-	char name [40];
-	char author [20];
-	char letter [20];
-	char year[20];
-	char someNumber[20];
-	char somefloat[20];
-	char director1[20];
-	char director2[20];
+	string idNum;
+	string id;
+	string name;
+	string author;
+	string letter;
+	string year;
+	string someNumber;
+	string somefloat;
+	string director1;
+	string director2;
 	while (!file.eof()) {
 		//int idNum1, string id1, string name1, int year1, float somefloat1
 		getline(file, idNum, ',');
@@ -190,7 +192,7 @@ int main() {
 			getline(file, year, ',');
 			getline(file, someNumber, ',');
 			getline(file, somefloat, ',');
-			*item[count] = new Book((int) idNum, (long long int) id, (string) name, (string) author, (char) letter, (int) year, (int) someNumber, (float) somefloat);
+			*item[count] = new Book((boost::lexical_cast<int>(idNum), boost::lexical_cast<long long int>(id), name, author, boost::lexical_cast<char>(letter), boost::lexical_cast<int>(year), boost::lexical_cast<int>(someNumber), boost::lexical_cast<float>(somefloat));
 
 		}
 		else {
@@ -198,7 +200,7 @@ int main() {
 			getline(file, director1, ',');
 			getline(file, director2, ',');
 			getline(file, somefloat, ',');
-			*item[count] = new DVD((int) idNum, (long long int) id, (string) name, (int) year, (string) director1, (string) director2, (float) somefloat);
+			*item[count] = new DVD(boost::lexical_cast<int>(idNum), boost::lexical_cast<long long int>(id), name, boost::lexical_cast<int>(year), director1, director2, boost::lexical_cast<float>(somefloat);
 		}
 
 		count++;
