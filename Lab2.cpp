@@ -1,4 +1,5 @@
 #include <iostream>
+#include <fstream>
 #include <string>
 
 using namespace std;
@@ -33,8 +34,6 @@ public:
 		delete someFloat;
 
 		idNum = 0;
-		id = NULL;
-		name = NULL;
 		year = 0;
 		someFloat = 0;
 
@@ -73,8 +72,6 @@ public:
 		delete author;
 		delete letter;
 		delete someNumber;
-		author = NULL;
-		letter = NULL;
 		someNumber = 0;
 	}
 	void setAuthor(string author1) {
@@ -101,8 +98,6 @@ public:
 	~DVD() {
 		delete director1;
 		delete director2;
-		director1 = NULL;
-		director2 = NULL;
 	}
 	void setDirector1(string d1) {
 		*director1 = d1;
@@ -121,6 +116,21 @@ public:
 
 
 int main() {
+	istream file ("Inventory.csv");
+	int count;
+	while (!file.eof()) {
+		count ++;	
+	}	
+	
+	Item *item[count];
+	
+	constant = 0;
+	while (!file.eof()) {
+		if (file.getline() < 5000) 
+			*item[count] = new Book();
+		else
+			*item[count] = new DVD();		
+	}	
 	
 	return 0;
 }
