@@ -126,8 +126,13 @@ int main() {
 	
 	constant = 0;
 	while (!file.eof()) {
-		if (file.getline() < 5000) 
+		if (file.getline() < 5000) {
+			//int idNum1, string id1, string name1, string author1, char letter1, int year1, int someNumber1, float somefloat1
+			char idNum [20];
+			char id [20]; char name [20]; char author [20]; char letter [20]; char year[20]; char someNumber[20]; char somefloat[20]
 			*item[count] = new Book();
+
+		}
 		else
 			*item[count] = new DVD();		
 	}	
