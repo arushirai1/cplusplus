@@ -1,7 +1,10 @@
 #include <iostream>
 #include <fstream>
 #include <string>
-#include <boost/lexical_cast.hpp>
+#include <stdio.h>
+#include <stdlib.h>
+#include <cstring>
+#include <sstream>
 
 using namespace std;
 
@@ -160,55 +163,71 @@ public:
 
 
 int main() {
-	ifstream file ("Inventory.csv");
-	int count;
-	while (!file.eof()) {
+
+	ifstream ice ("Inventory.csv");
+	int count = 0;
+	string blank;
+	while (!ice.eof()) {
+	    getline(ice, blank, '\n');
 		count ++;
 	}
-
-	Item *item[count];
-
+cout << "This is the count: " << count <<endl;
+	Item *item[count+1];
 	count = 0;
-	string idNum;
-	string id;
+	int idNum;
+	long long int id;
 	string name;
 	string author;
-	string letter;
-	string year;
-	string someNumber;
-	string somefloat;
+	char letter;
+	int year;
+	int someNumber;
+	float somefloat;
 	string director1;
 	string director2;
-	while (!file.eof()) {
-		//int idNum1, string id1, string name1, int year1, float somefloat1
-		getline(file, idNum, ',');
-		getline(file, id, ',');
-		getline(file, name, ',');
-		if ((int) idNum < 5000) {
-			//int idNum1, string id1, string name1, string author1, char letter1, int year1, int someNumber1, float somefloat1
-			//author(" "), letter(' '), someNumber(0)
-			getline(file, author, ',');
-			getline(file, letter, ',');
-			getline(file, year, ',');
-			getline(file, someNumber, ',');
-			getline(file, somefloat, ',');
-			*item[count] = new Book((boost::lexical_cast<int>(idNum), boost::lexical_cast<long long int>(id), name, author, boost::lexical_cast<char>(letter), boost::lexical_cast<int>(year), boost::lexical_cast<int>(someNumber), boost::lexical_cast<float>(somefloat));
+	string storage;
+	ifstream file ("Inventory.csv");
+	if (file) {
+    stringstream iss;
+    while (getline(file, blank)) {
+        iss << blank;
+		getline(iss, storage, ',');
+		idNum = atoi(storage.c_str());
+		getline(iss, storage, ',');
+		id = atoll(storage.c_str());
+		getline(iss, name, ',');
+
+		if (idNum < 5000) {
+			getline(iss, author, ',');
+			getline(iss, storage, ',');
+			year = atoi(storage.c_str());
+			getline(iss, storage, ',');
+			letter=storage[0];
+			getline(iss, storage, ',');
+			someNumber = atoi(storage.c_str());
+			getline(iss, storage, ',');
+			somefloat = atof(storage.c_str());
+			item[count] = new Book(idNum, id, name, author, letter, year, someNumber, somefloat);
 
 		}
 		else {
-			getline(file, year, ',');
-			getline(file, director1, ',');
-			getline(file, director2, ',');
-			getline(file, somefloat, ',');
-			*item[count] = new DVD(boost::lexical_cast<int>(idNum), boost::lexical_cast<long long int>(id), name, boost::lexical_cast<int>(year), director1, director2, boost::lexical_cast<float>(somefloat);
+			getline(iss, storage, ',');
+			year = atoi(storage.c_str());
+			getline(iss, director1, ',');
+			getline(iss, director2, ',');
+			getline(iss, storage, ',');
+			somefloat = atof(storage.c_str());
+			item[count] = new DVD(idNum, id, name, year, director1, director2, somefloat);
 		}
+    iss.clear();
+    count++;
+    }
 
-		count++;
 	}
 
-	for (Item p : item) {
-		p.print();
+	for (int c = 0; c <= count; c++) {
+		item[c]->print();
 	}
 
+    delete[] item;
 	return 0;
 }
