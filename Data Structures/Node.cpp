@@ -1,7 +1,7 @@
 using namespace std;
 
 template<class T> class Node {
-private:
+protected:
     Node<T>* nextNode;
     T data;
 
