@@ -1,33 +1,54 @@
 using namespace std;
 
-template<typename T>
-class Node {
+template<class T> class Node {
+private:
+    Node<T>* nextNode;
+    T data;
+
 public:
     Node();
     Node(T data);
-    void operator = (T data);
-    Node& operator = (Node passedInNode);
+    Node(Node& node);
+    Node& operator =(Node& passedInNode);
     ~Node();
     Node& next();
-private:
-    Node* nextNode;
-    T data;
+    T& getData();
+    void setData(T data);
 };
 Node::Node() {
-
+    nextNode = 0;
+    data = 0;
 }
 
 Node::Node(T data) {
-    this.data = data;
+    this.data = new T(data);
+    nextNode = NULL;
 }
 
-void Node::operator=(T data) {
-    this.data = data;
+Node::Node(Node& node){
+    this.data = node.getData();
+}
 
+Node& Node::operator=(Node& passedInNode) {
+    this.data = passedInNode.data;
+    this.nextNode = passedInNode.nextNode;
+
+    return passedInNode;
 }
 Node& Node::next() {
   return nextNode;
 }
+
+T& Node::getData() {
+    return this.data;
+}
+void Node::setData(T data) {
+    this.data = data;
+}
+
+
+/*
+
 template <class T>
 class Stack{
 public:
@@ -39,3 +60,5 @@ private:
     int amount;
     T* top;
 };
+
+*/
