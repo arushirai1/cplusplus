@@ -5,7 +5,7 @@ class Node {
 public:
     Node();
     Node(T data);
-    T operator = (T data);
+    void operator = (T data);
     Node& operator = (Node passedInNode);
     ~Node();
     Node& next();
@@ -21,7 +21,8 @@ Node::Node(T data) {
     this.data = data;
 }
 
-Node::operator=() {
+void Node::operator=(T data) {
+    this.data = data;
 
 }
 Node& Node::next() {
