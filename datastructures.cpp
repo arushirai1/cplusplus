@@ -35,7 +35,11 @@ Node& Node::operator=(Node& passedInNode) {
 
     return passedInNode;
 }
-Node& Node::next() {
+~Node() {
+    delete nextNode;
+    nextNode = 0;
+}
+Node* Node::next() {
   return nextNode;
 }
 
