@@ -39,8 +39,8 @@ Node& Node::operator=(Node& passedInNode) {
     delete nextNode;
     nextNode = 0;
 }
-Node* Node::next() {
-  return nextNode;
+Node& Node::next() {
+  return *nextNode;
 }
 
 T& Node::getData() {
