@@ -1,5 +1,3 @@
-using namespace std;
-
 template<class T> class Node {
 protected:
     Node<T>* nextNode;
@@ -51,18 +49,3 @@ void Node::setData(T data) {
 }
 
 
-/*
-
-template <class T>
-class Stack{
-public:
-    Stack();
-    ~Stack();
-    void push(T& data);
-    T pop();
-private:
-    int amount;
-    T* top;
-};
-
-*/
