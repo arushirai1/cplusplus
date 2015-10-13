@@ -4,48 +4,41 @@ protected:
     T data;
 
 public:
-    Node();
-    Node(T data);
-    Node(Node& node);
-    Node& operator =(Node& passedInNode);
-    ~Node();
-    Node& next();
-    T& getData();
-    void setData(T data);
-};
-Node::Node() {
-    nextNode = 0;
-    data = 0;
-}
+    Node() {
+        nextNode = 0;
+        data = 0;
+    }
 
-Node::Node(T data) {
-    this.data = new T(data);
-    nextNode = NULL;
-}
-
-Node::Node(Node& node){
+    Node(Node& node){
     this.data = node.getData();
-}
+    this.nextNode = node.next();
+    }
 
-Node& Node::operator=(Node& passedInNode) {
-    this.data = passedInNode.data;
-    this.nextNode = passedInNode.nextNode;
+    Node(T data) {
+        this.data = new T(data);
+        //nextNode = 0;
+    }
 
-    return passedInNode;
-}
-~Node::Node() {
-    delete nextNode;
-    nextNode = 0;
-}
-Node& Node::next() {
-  return *nextNode;
-}
+    Node<T>& operator=(Node<T>& passedInNode) {
+        this.data = passedInNode.data;
+        this.nextNode = passedInNode.nextNode;
 
-T& Node::getData() {
-    return this.data;
-}
-void Node::setData(T data) {
-    this.data = data;
-}
+        return passedInNode;
+    }
+    ~Node() {
+        delete nextNode;
+        nextNode = 0;
+    }
+    Node<T>& next() {
+      return *nextNode;
+    }
 
+    T& getData() {
+        return this.data;
+    }
+    void setData(T data) {
+        this.data = data;
+    }
+
+};
 

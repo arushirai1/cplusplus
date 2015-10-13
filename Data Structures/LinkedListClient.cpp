@@ -1,5 +1,5 @@
 #include "LinkedList.cpp"
-
+#include <iostream>
 using namespace std;
 int main() {
     LinkedList<int> list = new LinkedList<int>();
@@ -8,7 +8,7 @@ int main() {
     list.add(9);
 
     int count = 1;
-    while (list.getLength + 1 != count) {
+    while (list.getLength() + 1 != count) {
         cout << list.getNodeAt(count).getData() << endl;
     }
 }

@@ -95,10 +95,6 @@ public:
 		delete someNum;
 		someNum = 0;
 	}
-
-
-
-
 	virtual void print() {
 	    cout <<"Book: ";
 		Item::print();

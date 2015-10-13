@@ -6,103 +6,25 @@
 
 using namespace std;
 
-class Row {
-private:
-	int* rowNumber;
-public:
-	Row() {
-		rowNumber = new int(0);
-	}
-	Row(int rownum) {
-        rowNumber = new int(rownum);
-	}
-	~Row() {
-		delete rowNumber;
-		rowNumber = 0;
-	}
-
-	void setRowNumber(int rownum) {
-		*rowNumber = rownum;
-	}
-
-	int* getRowNumber() {
-		return rowNumber;
-	}
-
-};
-
-class Section {
-	string sectionName;
-public:
-	Section() {
-		sectionName = " ";
-	}
-	Section(int rowNum) {
-        sectionLocator(rowNum);
-	}
-
-	~Section() {
-		sectionName = "";
-	}
-
-	Section(string sectionstr) {
-		sectionName = sectionstr;
-	}
-	string getSection() {
-		return sectionName;
-	}
-
-	string sectionLocator(int rowNum) {
-
-		if (rowNum <= 4){ sectionName = "First Class"; }
-		else if (rowNum <= 14) { sectionName = "Business Class"; }
-		else { sectionName = "Economy Class"; }
-
-		return sectionName;
-
-	}
-};
-
-class Seat {
-	char* seatLetter;
-public:
-	Seat() {
-		*seatLetter = ' ';
-	}
-
-	~Seat() {
-
-	}
-
-	Seat(char seat) {
-		*seatLetter = seat;
-	}
-
-	void setSeat(char seat) {
-		*seatLetter = seat;
-	}
-
-};
-
-class Passenger {
+class Passenger{
 
 private:
 	string* firstname;
 	string* lastname;
-	Row* row1;
-	Section* section;
-	Seat* seat;
+	int* row1;
+	string section;
+	char* seat;
 
 public:
 	Passenger();
-	Passenger(string fname, string lname, int row);
+	Passenger(string fname, string lname, int row, char letter);
 	~Passenger();
 
 	void setFName(string fn);
 
 	void setLName(string ln);
 
-	void list();
+	virtual void list();
 
 	string getFName();
 
@@ -120,14 +42,12 @@ public:
 		*lastname = " ";
 	}
 
-	Passenger::Passenger(string fname, string lname, int row) {
+	Passenger::Passenger(string fname, string lname, int row, char letter) {
 		firstname = new string(fname);
 		lastname = new string(lname);
-		row1 = new Row;
-		section = new Section(row);
-        seat = new Seat;
-		row1->setRowNumber(row);
-
+		seat = new char(letter);
+		row1 = new int(row);
+		//section = new string(" ");
 	}
 
 	Passenger::~Passenger() {
@@ -145,7 +65,7 @@ public:
 		*lastname = ln;
 	}
 	void Passenger::list() {
-		std::cout << firstname << '\t' << lastname << '\t' << row1->getRowNumber();
+		std::cout << *firstname << '\t' << *lastname << '\t' << *row1<< '\t' << '\t' << *seat << '\t' <<section << endl;
 	}
 
 	string Passenger::getFName() {
@@ -156,54 +76,64 @@ public:
 		return *lastname;
 	}
 
-	void Passenger::setOtherVariables(int row01, char seatLetter1) {
-		//row1 = new Row(row01);
-		row1->setRowNumber(row01);
-		seat->setSeat(seatLetter1);
-	}
+
 
 	string Passenger::getSector() {
-		return section->getSection();
+		if (*row1 <= 4){ section= "First Class"; }
+		else if (*row1 <= 14) { section= "Business Class"; }
+		else { section= "Economy Class"; }
+
+		return section;
 	}
 
 
 int main() {
-	ifstream input1;
-	input1.open("Airline.csv");
-	int count = 0;
-	Passenger *p [400];
-	string firstName, lastName, e;
+    string blank;
+    ifstream ice2 ("Airline.csv");
+	int passenger_count = 0;
+    cout << passenger_count << endl;
+
+	while (!ice2.eof()) {
+	    getline(ice2, blank, '\n');
+		passenger_count ++;
+	}
+
+
+	Passenger* item [passenger_count+1];
+
+
+    string firstName, lastName, e;
 	char seatLetter;
-	int rowNumber;
-    stringstream input;
-    count = 0;
-
-    while (count < 400) {
-        //cout <<"Round2";
-        getline(input1, e);
-        cout << "Test" << endl;
-        input << e;
-		getline(input, lastName, ',');
-		getline(input, firstName, ',');
-		getline(input, e, ',' );
+	int rowNumber,count=0;
+	ifstream file2("Airline.csv");
+    if (file2) {
+        stringstream iss;
+        while (getline(file2, blank)) {
+            iss << blank;
+            getline(iss, lastName, ',');
+		getline(iss, firstName, ',');
+		getline(iss, e, ',' );
 		rowNumber = atoi(e.c_str());
-		getline(input, e, ',');
+		getline(iss, e, ',');
 		seatLetter = e[0];
-		getline(input, e, ' ');
+		getline(iss, e, ' ');
 
-		p[count] = new Passenger (firstName, lastName, rowNumber);
-		cout << lastName << endl;
-		cout << rowNumber << endl;
-		cout << p[count] -> getSector();
-        input.clear();
+		//c.storage.push_back(new Passenger (firstName, lastName, rowNumber, seatLetter));
+        item[count] = new Passenger(firstName, lastName, rowNumber, seatLetter);
+        iss.clear();
         count++;
+        }
     }
-	for (int counter = 0; counter < 2; counter++) {
-		if (p[counter]->getSector() == "First Class")
-			p[counter]->list();
+
+for (int counter = 0; counter < passenger_count; counter++) {
+		if (item[counter]->getSector() == "First Class")
+			item[counter]->list();
 	}
-	for (int counter = 0; counter < 2; counter++) {
-		if (p[counter]->getSector() == "Business Class")
-			p[counter]->list();
+	for (int counter = 0; counter < passenger_count; counter++) {
+		if (item[counter]->getSector() == "Business Class")
+			item[counter]->list();
 	}
+
+
+	return 0;
 }
